@@ -70,7 +70,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           Text(
-            "Nuvarande fokus:",
+            "Utvärdera ditt fokus:",
             style: TextStyle(
                 fontSize: ScreenUtils.getFontSize(20),
                 fontWeight: FontWeight.w500),
@@ -152,15 +152,17 @@ class SignUpPage extends StatelessWidget {
       currentLocation = null;
       return;
     }
-    
+
     Profile profile = new Profile(
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
     ApiService lfApiService = ApiService.instance;
     SmhiApiService smhiApiService = SmhiApiService.instance;
     LFRisk lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
-    WeatherForecast weatherForecast = await smhiApiService.getForecast(currentLocation.longitude, currentLocation.latitude);
+    WeatherForecast weatherForecast = await smhiApiService.getForecast(
+        currentLocation.longitude, currentLocation.latitude);
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
   }
 }
 
