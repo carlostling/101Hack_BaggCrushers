@@ -20,6 +20,14 @@ void main() {
     print(risk.score);
   });
 
+  test('Risk route http call works.', () async {
+
+    Risk risk = await apiService.getAccidentRiskFromDestinations("Lindholmen", "Ängelholm", {});
+
+    print(risk.percentile);
+    print(risk.score);
+  });
+
   test('Weather http call works', () async {
 
     Weather weather = await apiService.getWeatherFromPoint(57.708320, 11.937907, DateTime.now());

@@ -25,6 +25,20 @@ class ApiService {
     return Risk.fromJson(json.decode(response.body));
   }
 
+  Future<Risk> getAccidentRiskFromDestinations(String origin, String destination, Map<String, String> params) async {
+    _decorateParams(params);
+    params["origin"] = origin;
+    params["destination"] = destination;
+
+    var uri = Uri.https('api.101hack.se', 'v1/accident-risk/route', params);
+    final response = await http.get(uri);
+
+    if(response.statusCode != 200){
+      throw Exception('Failed to load post' + response.toString());
+    }
+
+    return Risk.fromJson(json.decode(response.body));
+  }
 
   Future<Weather> getWeatherFromPoint(double longitude, double latitude, DateTime date) async{
     Map<String, String> params = {
