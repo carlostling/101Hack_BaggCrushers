@@ -7,6 +7,8 @@ class Profile {
   String _kmPerYear;
   String _destination;
 
+  Profile(this._age,this._carLicense,this._destination,this._focus,this._kmPerYear);
+
 
 
 
