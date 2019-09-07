@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:risk_companion/models/Risk.dart';
+import 'package:risk_companion/models/LFRisk.dart';
 import 'package:risk_companion/models/Weather.dart';
 
 class ApiService {
@@ -12,7 +12,7 @@ class ApiService {
 
   static ApiService get instance {return _instance;}
 
-  Future<Risk>  getAccidentRisk(Map<String, String> params) async{
+  Future<LFRisk>  getAccidentRisk(Map<String, String> params) async{
     _decorateParams(params);
 
     var uri = Uri.https('api.101hack.se', 'v1/accident-risk', params);
@@ -22,7 +22,7 @@ class ApiService {
       throw Exception('Failed to load post' + response.toString());
     }
 
-    return Risk.fromJson(json.decode(response.body));
+    return LFRisk.fromJson(json.decode(response.body));
   }
 
 
