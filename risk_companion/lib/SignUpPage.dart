@@ -94,7 +94,7 @@ class SignUpPage extends StatelessWidget {
             ],
           ),
           RaisedButton(
-            onPressed: () => _submit(),
+            onPressed: () => _submit(context),
             color: Color.fromRGBO(227, 6, 19, 0.8),
             shape: StadiumBorder(),
             elevation: 5,
@@ -135,7 +135,7 @@ class SignUpPage extends StatelessWidget {
     _destination = newValue;
   }
 
-  void _submit() async {
+  void _submit(BuildContext context) async {
     LocationData currentLocation;
     var location = new Location();
 
@@ -152,7 +152,7 @@ class SignUpPage extends StatelessWidget {
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
     
     
-    MaterialPageRoute(builder: (context) => ResultPage());
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage()));
   }
 }
 
