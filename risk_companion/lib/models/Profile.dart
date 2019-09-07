@@ -1,13 +1,33 @@
 //Ålder, kön, regnummer, mil per år, slutdestination,
 
 class Profile {
-  final int age;
-  final int focus;
-  final String carLicense;
-  final int kmPerYear;
-  final String destination;
+  String _age;
+  String _focus;
+  String _carLicense;
+  String _kmPerYear;
+  String _destination;
 
-  Profile({this.age,this.carLicense,this.focus,this.destination,this.kmPerYear});
-  
+
+
+
+set age(String age){
+  _age = age;
+}
+
+set focus(String focus){
+  _focus = focus;
+}
+
+set carLicense(String carLicense){
+  _carLicense = carLicense;
+}
+
+set kmPerYear(String kmPerYear){
+  _kmPerYear = kmPerYear;
+}
+
+set destination(String destination){
+  _destination = destination;
+}
 
 }
