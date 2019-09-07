@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:risk_companion/main.dart';
-import 'package:risk_companion/models/Risk.dart';
+import 'package:risk_companion/models/LFRisk.dart';
 import 'package:risk_companion/models/Weather.dart';
 import 'package:risk_companion/services/apiService.dart';
 
@@ -14,7 +14,7 @@ void main() {
 
   test('Risk http call works.', () async {
 
-    Risk risk = await apiService.getAccidentRisk({});
+    LFRisk risk = await apiService.getAccidentRisk({});
 
     print(risk.percentile);
     print(risk.score);
