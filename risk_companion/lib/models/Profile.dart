@@ -7,29 +7,34 @@ class Profile {
   String _kmPerYear;
   String _destination;
 
-  Profile(this._age,this._carLicense,this._destination,this._focus,this._kmPerYear);
+  set age(String age) {
+    _age = age;
+  }
 
+  set focus(String focus) {
+    _focus = focus;
+  }
 
+  set carLicense(String carLicense) {
+    _carLicense = carLicense;
+  }
 
+  set kmPerYear(String kmPerYear) {
+    _kmPerYear = (double.parse(kmPerYear) / 10).toString();
+  }
 
-set age(String age){
-  _age = age;
-}
+  set destination(String destination) {
+    _destination = destination;
+  }
 
-set focus(String focus){
-  _focus = focus;
-}
+  Map<String, String> getDataMap() {
+    Map<String, String> dataMap = new Map<String, String>();
+    dataMap.putIfAbsent("age", () => _age);
+    dataMap.putIfAbsent("focus", () => _focus);
+    dataMap.putIfAbsent("carLicence", () => _carLicense);
+    dataMap.putIfAbsent("distance", () => _kmPerYear);
+    dataMap.putIfAbsent("destination", () => _destination);
 
-set carLicense(String carLicense){
-  _carLicense = carLicense;
-}
-
-set kmPerYear(String kmPerYear){
-  _kmPerYear = kmPerYear;
-}
-
-set destination(String destination){
-  _destination = destination;
-}
-
+    return dataMap;
+  }
 }
