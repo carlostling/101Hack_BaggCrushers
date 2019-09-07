@@ -1,4 +1,4 @@
-//Ålder, kön, regnummer, mil per år, slutdestination,
+import 'package:location/location.dart';
 
 class Profile {
   String _age;
@@ -6,10 +6,8 @@ class Profile {
   String _carLicense;
   String _kmPerYear;
   String _destination;
+  LocationData _locationData;
 
-  set age(String age) {
-    _age = age;
-  }
 
   set focus(String focus) {
     _focus = focus;
@@ -37,4 +35,12 @@ class Profile {
 
     return dataMap;
   }
+  Profile(this._age,this._carLicense,this._destination,this._focus,this._kmPerYear,this._locationData);
+
+
+
+
+set age(String age){
+  _age = age;
+}
 }

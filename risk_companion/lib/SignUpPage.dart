@@ -3,6 +3,7 @@ import 'package:risk_companion/ResultPage.dart';
 import 'package:risk_companion/models/Profile.dart';
 import 'ScreenUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:location/location.dart';
 
 class SignUpPage extends StatelessWidget {
   String _age;
@@ -134,8 +135,22 @@ class SignUpPage extends StatelessWidget {
     _destination = newValue;
   }
 
-  void _submit() {
-    Profile profile = new Profile(_age,_carLicense,_destination,_focus,_kmPerYear);
+  void _submit() async {
+    LocationData currentLocation;
+    var location = new Location();
+
+// Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      currentLocation = await location.getLocation();
+    } catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {}
+      currentLocation = null;
+      return;
+    }
+    
+    Profile profile = new Profile(
+        _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
+    
     
     MaterialPageRoute(builder: (context) => ResultPage());
   }
