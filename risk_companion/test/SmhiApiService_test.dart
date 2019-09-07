@@ -7,9 +7,9 @@ void main() {
 
   test('Weatherforecast http call works.', () async {
 
-    WeatherForecast weatherForecast = await apiService.getForecast(57.708320, 11.937907);
+    WeatherForecast weatherForecast = await apiService.getForecast(16.158, 58.58);
 
-    print(weatherForecast.airTemperature);
+    //print(weatherForecast.airTemperature);
     print(weatherForecast.json);
   });
 

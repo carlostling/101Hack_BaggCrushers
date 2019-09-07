@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:risk_companion/ResultPage.dart';
+import 'package:risk_companion/models/Profile.dart';
 import 'ScreenUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpPage extends StatelessWidget {
+
+  int _age;
+  int _focus;
+  String _carLicense;
+  int _kmPerYear;
+  String _destination;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
       ),
@@ -33,6 +42,7 @@ class SignUpPage extends StatelessWidget {
           ),
           InputFieldWidget(
             title: "Ålder",
+            onChange: _age,
           ),
           SizedBox(
             height: 10,
@@ -56,6 +66,9 @@ class SignUpPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
             child: FocusSliderWidget(),
+          ),
+          InputFieldWidget(
+            title: "Slutdestination",
           ),
         Expanded(child: Container(),), 
         Row(
@@ -82,17 +95,24 @@ class SignUpPage extends StatelessWidget {
       ),
     );
   }
+
+  bool _submit(){
+
+  }
 }
 
 class InputFieldWidget extends StatelessWidget {
   final String title;
+  final String value;
+  final dynamic onChange;
 
-  InputFieldWidget({@required this.title});
+  InputFieldWidget({@required this.title,this.value,this.onChange});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(15)),
       child: TextFormField(
+        initialValue: value,
         decoration: new InputDecoration(
           labelStyle: TextStyle(color: Colors.grey),
           labelText: title,
@@ -102,6 +122,9 @@ class InputFieldWidget extends StatelessWidget {
             borderSide: new BorderSide(),
           ),
         ),
+        onChanged: (string){
+          onChange = string;
+        },
         validator: (val) {
           if (val.length == 0) {
             return "Email cannot be empty";

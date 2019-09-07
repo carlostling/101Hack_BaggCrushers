@@ -14,8 +14,8 @@ class WeatherForecast {
   double _meanPrecipitationIntensity;
   double _medianPrecipitationIntensity;
   int _percentFrozenPrecipitation;
-  String _precipitationCategory;
-  String _weatherSymbol;
+  int _precipitationCategory;
+  int _weatherSymbol;
 
 
   WeatherForecast.fromJson(Map<String, dynamic> json){
@@ -26,7 +26,7 @@ class WeatherForecast {
 
     parameters.forEach((parameter) {
       String parameterName = parameter["name"];
-      var value = parameter["values"];
+      var value = parameter["values"][0];
 
       switch(parameterName) {
         case 'msl':
@@ -78,9 +78,9 @@ class WeatherForecast {
     });
   }
 
-  String get weatherSymbol => _weatherSymbol;
+  int get weatherSymbol => _weatherSymbol;
 
-  String get precipitationCategory => _precipitationCategory;
+  int get precipitationCategory => _precipitationCategory;
 
   int get percentFrozenPrecipitation => _percentFrozenPrecipitation;
 
@@ -109,6 +109,5 @@ class WeatherForecast {
   double get airPressure => _airPressure;
 
   Map<String, dynamic> get json => _json;
-
 
 }
