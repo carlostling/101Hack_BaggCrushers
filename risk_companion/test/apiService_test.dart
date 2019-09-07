@@ -22,7 +22,7 @@ void main() {
 
   test('Risk route http call works.', () async {
 
-    Risk risk = await apiService.getAccidentRiskFromDestinations("Lindholmen", "Ängelholm", {});
+    LFRisk risk = await apiService.getAccidentRiskFromDestinations("Lindholmen", "Ängelholm", {});
 
     print(risk.percentile);
     print(risk.score);
