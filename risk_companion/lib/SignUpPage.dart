@@ -166,8 +166,7 @@ class InputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(15)),
-      child: TextFormField(
-        initialValue: initialValue,
+      child: TextField(
         decoration: new InputDecoration(
           labelStyle: TextStyle(color: Colors.grey),
           labelText: title,
@@ -179,13 +178,6 @@ class InputFieldWidget extends StatelessWidget {
         ),
         onChanged: (string) {
           callback(string);
-        },
-        validator: (val) {
-          if (val.length == 0) {
-            return "Email cannot be empty";
-          } else {
-            return null;
-          }
         },
         keyboardType: TextInputType.text,
         style: new TextStyle(
