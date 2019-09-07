@@ -8,6 +8,8 @@ class Profile {
   String _destination;
   LocationData _locationData;
 
+  get locationData => _locationData;
+
 
   set focus(String focus) {
     _focus = focus;
