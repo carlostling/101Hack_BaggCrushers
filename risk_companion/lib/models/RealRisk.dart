@@ -2,6 +2,7 @@ import 'package:risk_companion/models/Weather.dart';
 import 'package:risk_companion/models/WeatherForecast.dart';
 import 'package:risk_companion/models/LFRisk.dart';
 
+
 class RealRisk{
 
   double _riskScore;
@@ -30,5 +31,7 @@ class RealRisk{
     else if(mmOfRain > 0.39)
       return 2.46;
   }
+
+   double get riskscore =>  _riskScore;
 }
 

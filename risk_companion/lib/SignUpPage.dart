@@ -150,7 +150,7 @@ class SignUpPage extends StatelessWidget {
     
     Profile profile = new Profile(
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
-    
+  
     
     MaterialPageRoute(builder: (context) => ResultPage());
   }
