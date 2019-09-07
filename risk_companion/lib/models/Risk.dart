@@ -10,7 +10,6 @@ class Risk {
     _score = json['score'];
   }
 
-
   double get percentile =>  _percentile;
   double get score => _score;
 
