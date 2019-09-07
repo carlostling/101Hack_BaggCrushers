@@ -24,7 +24,6 @@ class ApiService {
 
     return LFRisk.fromJson(json.decode(response.body));
   }
-
   Future<LFRisk> getAccidentRiskFromDestinations(String origin, String destination, Map<String, String> params) async {
     _decorateParams(params);
     params["origin"] = origin;

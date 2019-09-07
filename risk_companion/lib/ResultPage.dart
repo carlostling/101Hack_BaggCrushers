@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:risk_companion/models/RealRisk.dart';
 import 'package:wave/wave.dart';
 import 'package:wave/config.dart';
 import 'ScreenUtils.dart';
 
 class ResultPage extends StatelessWidget {
+  final RealRisk _realRisk;
+  ResultPage(this._realRisk);
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
@@ -20,7 +23,7 @@ class ResultPage extends StatelessWidget {
               height: 50,
               width: 0,
             ),
-            RiskIndicatorWidget(),
+            RiskIndicatorWidget(_realRisk.riskscore),
             SizedBox(
               height: ScreenUtils.getHeight(20),
               width: 0,
@@ -43,6 +46,10 @@ class ResultPage extends StatelessWidget {
 }
 
 class RiskIndicatorWidget extends StatelessWidget {
+  final double _riskScore;
+
+  RiskIndicatorWidget(this._riskScore);
+  
   @override
   Widget build(BuildContext context) {
     return Container(

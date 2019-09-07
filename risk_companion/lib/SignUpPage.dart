@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:risk_companion/ResultPage.dart';
+import 'package:risk_companion/models/LFRisk.dart';
 import 'package:risk_companion/models/Profile.dart';
+import 'package:risk_companion/models/RealRisk.dart';
+import 'package:risk_companion/models/WeatherForecast.dart';
+import 'package:risk_companion/services/SmhiApiService.dart';
+import 'package:risk_companion/services/apiService.dart';
 import 'ScreenUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:location/location.dart';
@@ -150,9 +155,12 @@ class SignUpPage extends StatelessWidget {
     
     Profile profile = new Profile(
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
-  
-    
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage()));
+    ApiService lfApiService = ApiService.instance;
+    SmhiApiService smhiApiService = SmhiApiService.instance;
+    LFRisk lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
+    WeatherForecast weatherForecast = await smhiApiService.getForecast(currentLocation.longitude, currentLocation.latitude);
+    RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
   }
 }
 
