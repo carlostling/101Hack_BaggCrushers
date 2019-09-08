@@ -80,7 +80,7 @@ class SignUpPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
-            child: FocusSliderWidget(),
+            child: FocusSliderWidget(changeFocus),
           ),
           InputFieldWidget(
             title: "Destination",
@@ -205,6 +205,10 @@ class InputFieldWidget extends StatelessWidget {
 }
 
 class FocusSliderWidget extends StatefulWidget {
+  Function callback;
+
+  FocusSliderWidget(this.callback);
+
   @override
   _FocusSliderWidgetState createState() => _FocusSliderWidgetState();
 }
@@ -231,6 +235,7 @@ class _FocusSliderWidgetState extends State<FocusSliderWidget> {
         value: _sliderValue.toDouble(),
         label: '${_sliderValue.round()} out of 5',
         onChanged: (double currentSizeOfQuiz) {
+          widget.callback(currentSizeOfQuiz);
           setState(() {
             _sliderValue = currentSizeOfQuiz.toInt();
           });
