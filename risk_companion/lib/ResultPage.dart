@@ -8,7 +8,7 @@ class ResultPage extends StatelessWidget {
   final RealRisk _realRisk;
   double _focus;
   ResultPage(this._realRisk, this._focus);
-  
+
   @override
   Widget build(BuildContext context) {
     print(_focus);
@@ -16,41 +16,47 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
+        title: Text("Risk summary"),
+        centerTitle: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: () => Navigator.of(context).pop(),),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-              width: 0,
-            ),
-            RiskIndicatorWidget(_realRisk.riskscore),
-            SizedBox(
-              height: ScreenUtils.getHeight(20),
-              width: 0,
-            ),
-            AdviceTitleWidget(),
-            Divider(),
-            _focus <= 160  ? InformationCardWidget(
-                title: "Low Focus",
-                body: "Your focus is low, make sure to stop and rest if you feel the need to."
-            ) : Container(width: 0,height: 0),
-            InformationCardWidget(
-              title: "Riskful Route",
-              body: "Your selected route is considered high risk. ",
-            ),
-            InformationCardWidget(
-              title: "Young Age",
-              body: "Young people tend to drive more recklessly. You are not invincible....",
-            ),
-            InformationCardWidget(
-              title: "Insecure Vehicle",
-              body: "Your vehicle is not considered high-safety. Keep this in mind.",
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 50,
+            width: 0,
+          ),
+          RiskIndicatorWidget(_realRisk.riskscore),
+          SizedBox(
+            height: ScreenUtils.getHeight(20),
+            width: 0,
+          ),
+          AdviceTitleWidget(),
+          Divider(),
+          Expanded(child: ListView(
+            children: <Widget>[
+              _focus <= 160  ? InformationCardWidget(
+                  title: "Low Focus",
+                  body: "Your focus is low, make sure to stop and rest if you feel the need to."
+              ) : Container(width: 0,height: 0),
+              InformationCardWidget(
+                title: "Riskful Route",
+                body: "Your selected route is considered high risk. ",
+              ),
+              InformationCardWidget(
+                title: "Young Age",
+                body: "Young people tend to drive more recklessly. You are not invincible....",
+              ),
+              InformationCardWidget(
+                title: "Insecure Vehicle",
+                body: "Your vehicle is not considered high-safety. Keep this in mind.",
+              ),
+            ],
+          ),
+          ),
+        ],
       ),
     );
   }
@@ -60,7 +66,7 @@ class RiskIndicatorWidget extends StatelessWidget {
   final double _riskScore;
 
   RiskIndicatorWidget(this._riskScore);
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,13 +86,21 @@ class RiskIndicatorWidget extends StatelessWidget {
                     Color.fromRGBO(0, 90, 160, 1),
                     Color.fromRGBO(0, 90, 160, 1)
                   ],
-                  [Color.fromRGBO(200, 6, 19, 1), Color.fromRGBO(227, 6, 19, 1)],
+                  [
+                    Color.fromRGBO(200, 6, 19, 1),
+                    Color.fromRGBO(227, 6, 19, 1)
+                  ],
                   [Colors.orange, Color(0x66FF9800)],
                   [Colors.yellow, Color(0x55FFEB3B)]
                 ],
                 durations: [35000, 19440, 10800, 6000],
                 //heightPercentages: [0, 0.20, 0.25, 0.30],
-                heightPercentages: [0, 1-(_riskScore/100)-0.15, 1-(_riskScore/100)-0.10, 1-(_riskScore/100)-0.05],
+                heightPercentages: [
+                  0,
+                  1 - (_riskScore / 100) - 0.15,
+                  1 - (_riskScore / 100) - 0.10,
+                  1 - (_riskScore / 100) - 0.05
+                ],
                 blur: MaskFilter.blur(BlurStyle.solid, 10),
                 gradientBegin: Alignment.bottomLeft,
                 gradientEnd: Alignment.topRight,
@@ -98,18 +112,22 @@ class RiskIndicatorWidget extends StatelessWidget {
             Center(
                 child: Text(
               riskText(),
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white70),
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white70),
             )),
           ],
         ),
       ),
     );
   }
-  String riskText(){
+
+  String riskText() {
     print(_riskScore);
     if (_riskScore <= 33)
       return "Low Risk";
-    else if (_riskScore <=66)
+    else if (_riskScore <= 66)
       return "Medium Risk";
     else
       return "High Risk";
