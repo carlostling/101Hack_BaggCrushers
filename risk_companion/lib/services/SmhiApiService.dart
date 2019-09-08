@@ -10,8 +10,9 @@ class SmhiApiService {
 
 
   Future<WeatherForecast> getForecast(double longitude, double latitude) async {
-    
-    final response = await http.get('https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json');
+    longitude = 24.794242;
+    latitude = 59.005735;
+    final response = await http.get('https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude.toStringAsFixed(6)}/lat/${latitude.toStringAsFixed(6)}/data.json');
     if(response.statusCode != 200){
       throw Exception('Failed to load weather ' + response.toString());
     }

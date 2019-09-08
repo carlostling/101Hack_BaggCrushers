@@ -17,11 +17,20 @@ import 'package:location/location.dart' as loc;
 
 import 'ScreenUtils.dart';
 
-class RiskPage extends StatelessWidget {
-  String _focus;
+class RiskPage extends StatefulWidget {
+  @override
+  _RiskPageState createState() => _RiskPageState();
+}
+
+class _RiskPageState extends State<RiskPage> {
+  String _focus = "3";
+
   String _destination;
+
   String _age;
+
   String _carLicense;
+
   String _kmPerYear;
 
   @override
@@ -90,7 +99,9 @@ class RiskPage extends StatelessWidget {
   }
 
   void changeFocus(String newValue) {
+    setState(() {
     _focus = newValue;
+    });
   }
 
   void _submit(BuildContext context) async {
@@ -217,10 +228,11 @@ class _FocusSliderWidgetState extends State<FocusSliderWidget> {
         divisions: 7,
         value: _sliderValue.toDouble(),
         label: '${_sliderValue.round()} out of 5',
-        onChanged: (double currentSizeOfQuiz) {
-          widget.callback(currentSizeOfQuiz.toString());
+        onChanged: (double value) {
+          int focus = value.toInt()*80;
+          widget.callback(focus.toString());
           setState(() {
-            _sliderValue = currentSizeOfQuiz.toInt();
+            _sliderValue = value.toInt();
           });
         },
       ),

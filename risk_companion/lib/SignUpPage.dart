@@ -6,9 +6,16 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:location/location.dart' as loc;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   String _age;
+
   String _carLicense;
+
   String _kmPerYear;
 
   @override
@@ -16,7 +23,6 @@ class SignUpPage extends StatelessWidget {
     
     ScreenUtils.init(context);
     return Scaffold(
-      key: key,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
@@ -106,16 +112,24 @@ class SignUpPage extends StatelessWidget {
   }
 
   void changeAge(String newValue) {
-    _age = newValue;
+    setState(() {
+       _age = newValue;
+    });
+   
   }
 
-
   void changeCarLicense(String newValue) {
-    _carLicense = newValue;
+    setState(() {
+      _carLicense = newValue;
+    });
+    
   }
 
   void changeKmPerYear(String newValue) {
-    _kmPerYear = newValue;
+    setState(() {
+      _kmPerYear = newValue;
+    });
+    
   }
 
   void _submit(BuildContext context) async {

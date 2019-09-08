@@ -24,8 +24,7 @@ class ResultPage extends StatelessWidget {
               height: 50,
               width: 0,
             ),
-            //RiskIndicatorWidget(_realRisk.riskscore),
-            RiskIndicatorWidget(),
+            RiskIndicatorWidget(_realRisk.riskscore),
             SizedBox(
               height: ScreenUtils.getHeight(20),
               width: 0,
@@ -48,9 +47,9 @@ class ResultPage extends StatelessWidget {
 }
 
 class RiskIndicatorWidget extends StatelessWidget {
-  final double _riskScore = 125;
+  final double _riskScore;
 
-  //RiskIndicatorWidget(this._riskScore);
+  RiskIndicatorWidget(this._riskScore);
   
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class RiskIndicatorWidget extends StatelessWidget {
                 ],
                 durations: [35000, 19440, 10800, 6000],
                 //heightPercentages: [0, 0.20, 0.25, 0.30],
-                heightPercentages: [0, 1-(_riskScore/250)-0.15, 1-(_riskScore/250)-0.10, 1-(_riskScore/250)-0.05],
+                heightPercentages: [0, 1-(_riskScore/100)-0.15, 1-(_riskScore/100)-0.10, 1-(_riskScore/100)-0.05],
                 blur: MaskFilter.blur(BlurStyle.solid, 10),
                 gradientBegin: Alignment.bottomLeft,
                 gradientEnd: Alignment.topRight,
@@ -97,13 +96,13 @@ class RiskIndicatorWidget extends StatelessWidget {
     );
   }
   String riskText(){
-    if (_riskScore <= 100)
+    print(_riskScore);
+    if (_riskScore <= 33)
       return "Low Risk";
-    else if (_riskScore <=150)
+    else if (_riskScore <=66)
       return "Medium Risk";
-    else if (_riskScore > 150)
+    else
       return "High Risk";
-    return "";
   }
 }
 
