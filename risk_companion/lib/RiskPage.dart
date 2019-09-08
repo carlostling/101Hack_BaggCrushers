@@ -34,6 +34,8 @@ class _RiskPageState extends State<RiskPage> {
 
   String _kmPerYear;
 
+  bool onClick = false;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
@@ -78,17 +80,21 @@ class _RiskPageState extends State<RiskPage> {
                Padding(
                  padding: const EdgeInsets.all(8.0),
                  child: RaisedButton(
-                  onPressed: () => _submit(context),
+                  onPressed: () {_submit(context);
+                  setState(() {
+                    onClick = true;
+                  });
+                   },
                   color: Color.fromRGBO(227, 6, 19, 0.8),
                   shape: StadiumBorder(),
                   elevation: 5,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Text(
+                    child: !onClick ?Text(
                       "Calculate risk",
                       style: TextStyle(
                           color: Colors.white, fontSize: ScreenUtils.getFontSize(25)),
-                    ),
+                    ): CircularProgressIndicator(backgroundColor: Colors.grey[300],),
                   ),
               ),
                ),
@@ -146,6 +152,7 @@ class _RiskPageState extends State<RiskPage> {
     WeatherForecast weatherForecast = await smhiApiService.getForecast(
         currentLocation.longitude, currentLocation.latitude);
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
+    onClick = false;
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ResultPage(realRisk, double.parse(_focus))));
   }
