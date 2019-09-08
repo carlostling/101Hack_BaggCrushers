@@ -43,6 +43,7 @@ class _RiskPageState extends State<RiskPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
+        title: Text("Risk analysis"),
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.edit),
@@ -56,21 +57,47 @@ class _RiskPageState extends State<RiskPage> {
             
             Column(
               children: <Widget>[
-                SizedBox(height: ScreenUtils.getHeight(100),),
+                SizedBox(height: ScreenUtils.getHeight(50),),
+
+                Center(
+              child: Text(
+            "Trip specifics",
+            style: TextStyle(
+              fontSize: ScreenUtils.getFontSize(40),
+              color: Color.fromRGBO(0, 90, 160, 1),
+            ),
+            textAlign: TextAlign.center,
+          )),
+                SizedBox(height: ScreenUtils.getHeight(30),),
+                
                 Text(
                 "Evaluate your focus:",
                 style: TextStyle(
                     fontSize: ScreenUtils.getFontSize(20),
                     fontWeight: FontWeight.w500),
               ),
-              
+                 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
                 child: FocusSliderWidget(changeFocus),
               ),
-              SizedBox(height: ScreenUtils.getHeight(20),),
+              SizedBox(height: ScreenUtils.getHeight(30),),
+              Center(
+              child: Text(
+                "Final destination:",
+                style: TextStyle(
+                    fontSize: ScreenUtils.getFontSize(20),
+                    fontWeight: FontWeight.w500),
+              ),),
+              
+          SizedBox(height: ScreenUtils.getHeight(10),),
               AutoCompleteWidget(changeDestination),
-               
+               Text(
+                "*Destination is optinal, but gives a better risk analysis.",
+                style: TextStyle(
+                    fontSize: ScreenUtils.getFontSize(11),
+                    fontWeight: FontWeight.w500,color: Colors.grey[500]) ,
+              ),
               ],
             ),
            Align(
@@ -90,7 +117,7 @@ class _RiskPageState extends State<RiskPage> {
                   elevation: 5,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: !onClick ?Text(
+                    child: !onClick ? Text(
                       "Calculate risk",
                       style: TextStyle(
                           color: Colors.white, fontSize: ScreenUtils.getFontSize(25)),
