@@ -11,6 +11,7 @@ import 'package:risk_companion/models/WeatherForecast.dart';
 import 'package:risk_companion/services/SmhiApiService.dart';
 import 'package:risk_companion/services/apiService.dart';
 import 'ScreenUtils.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:location/location.dart' as loc;
@@ -123,17 +124,25 @@ class _RiskPageState extends State<RiskPage> {
       return;
     }
 
+    ApiService lfApiService = ApiService.instance;
+    SmhiApiService smhiApiService = SmhiApiService.instance;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     _age = sharedPreferences.getString("age");
     _carLicense = sharedPreferences.getString("carLicense");
     _kmPerYear = sharedPreferences.getString("kmPerYear");
+    var _currentLocationAdress = await Geocoder.local.findAddressesFromCoordinates(Coordinates(currentLocation.latitude, currentLocation.longitude));
 
     Profile profile = new Profile(
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
-    ApiService lfApiService = ApiService.instance;
-    SmhiApiService smhiApiService = SmhiApiService.instance;
-    LFRisk lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
+
+    LFRisk lfRisk;
+    if(profile.destination != null && profile.destination.isNotEmpty){
+      lfRisk = await lfApiService.getAccidentRiskFromDestinations(_currentLocationAdress[0].addressLine, profile.destination, profile.getDataMap());
+    }else{
+      lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
+    }
+
     WeatherForecast weatherForecast = await smhiApiService.getForecast(
         currentLocation.longitude, currentLocation.latitude);
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
@@ -185,9 +194,8 @@ class _AutoCompleteWidgetState extends State<AutoCompleteWidget> {
                 child: Text(item),
               ),
           onSearch: (String search) async {
-            //TODO GOOGLE MAPS
 
-            if(!search.isEmpty){
+            if(search.isNotEmpty){
 
               PlacesAutocompleteResponse response = await _places.autocomplete(search, language: "sv", components: [Component("country", "SE")]);
               return response.predictions.map((prediction){

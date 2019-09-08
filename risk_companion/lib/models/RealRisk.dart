@@ -12,7 +12,8 @@ class RealRisk{
   RealRisk(LFRisk lfRisk, WeatherForecast weatherForecast) {
     this._lfRisk = lfRisk;
     this._weatherForecast = weatherForecast;
-    calculateRiskScore();
+    //calculateRiskScore();
+    _riskScore = lfRisk.score;
 }
 
 
