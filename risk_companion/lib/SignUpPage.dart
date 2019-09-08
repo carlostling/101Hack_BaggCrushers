@@ -159,7 +159,7 @@ class SignUpPage extends StatelessWidget {
     SmhiApiService smhiApiService = SmhiApiService.instance;
     LFRisk lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
     WeatherForecast weatherForecast = await smhiApiService.getForecast(
-        currentLocation.longitude, currentLocation.latitude);
+        num.parse(currentLocation.longitude.toStringAsFixed(6)), num.parse(currentLocation.latitude.toStringAsFixed(6)));
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
