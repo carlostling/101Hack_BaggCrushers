@@ -30,7 +30,7 @@ class SignUpPage extends StatelessWidget {
           ),
           Center(
               child: Text(
-            "Calculate Risk",
+            "Enter details",
             style: TextStyle(
               fontSize: ScreenUtils.getFontSize(40),
               color: Color.fromRGBO(0, 90, 160, 1),

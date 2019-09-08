@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:risk_companion/SignUpPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -29,9 +30,12 @@ class RiskPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
         actions: <Widget>[
-          Icon(Icons.edit),
+          IconButton(icon: Icon(Icons.edit),
+          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage())),
+          ),
         ],
       ),
       
