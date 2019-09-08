@@ -100,7 +100,7 @@ class RiskIndicatorWidget extends StatelessWidget {
     if (_riskScore <= 100)
       return "Low Risk";
     else if (_riskScore <=150)
-      return "MMedium Risk";
+      return "Medium Risk";
     else if (_riskScore > 150)
       return "High Risk";
     return "";
