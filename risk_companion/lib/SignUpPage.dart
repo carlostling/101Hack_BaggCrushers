@@ -34,7 +34,7 @@ class SignUpPage extends StatelessWidget {
           ),
           Center(
               child: Text(
-            "BERÄKNA RISK",
+            "Calculate Risk",
             style: TextStyle(
               fontSize: ScreenUtils.getFontSize(40),
               color: Color.fromRGBO(0, 90, 160, 1),
@@ -46,7 +46,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Ålder",
+            title: "Age",
             callback: changeAge,
           ),
           SizedBox(
@@ -54,7 +54,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Nummerplåt",
+            title: "License Plate",
             callback: changeCarLicense,
           ),
           SizedBox(
@@ -62,7 +62,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Km per år",
+            title: "Km per year",
             callback: changeKmPerYear,
           ),
           SizedBox(
@@ -70,7 +70,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           Text(
-            "Utvärdera ditt fokus:",
+            "Current focus:",
             style: TextStyle(
                 fontSize: ScreenUtils.getFontSize(20),
                 fontWeight: FontWeight.w500),
@@ -80,7 +80,7 @@ class SignUpPage extends StatelessWidget {
             child: FocusSliderWidget(),
           ),
           InputFieldWidget(
-            title: "Slutdestination",
+            title: "Destination",
             callback: changeDestination,
           ),
           Expanded(
@@ -93,7 +93,7 @@ class SignUpPage extends StatelessWidget {
                 value: true,
               ),
               Text(
-                "Spara min data till nästa riskanalys",
+                "Save my data for next calculation",
                 style: TextStyle(fontWeight: FontWeight.w400),
               )
             ],
@@ -106,7 +106,7 @@ class SignUpPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Gå vidare",
+                "Next",
                 style: TextStyle(
                     color: Colors.white, fontSize: ScreenUtils.getFontSize(20)),
               ),
@@ -152,7 +152,7 @@ class SignUpPage extends StatelessWidget {
       currentLocation = null;
       return;
     }
-
+    
     Profile profile = new Profile(
         _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
     ApiService lfApiService = ApiService.instance;
@@ -161,8 +161,7 @@ class SignUpPage extends StatelessWidget {
     WeatherForecast weatherForecast = await smhiApiService.getForecast(
         num.parse(currentLocation.longitude.toStringAsFixed(6)), num.parse(currentLocation.latitude.toStringAsFixed(6)));
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
   }
 }
 
@@ -224,7 +223,7 @@ class _FocusSliderWidgetState extends State<FocusSliderWidget> {
         max: 5.0,
         divisions: 7,
         value: _sliderValue.toDouble(),
-        label: '${_sliderValue.round()} av 5',
+        label: '${_sliderValue.round()} out of 5',
         onChanged: (double currentSizeOfQuiz) {
           setState(() {
             _sliderValue = currentSizeOfQuiz.toInt();

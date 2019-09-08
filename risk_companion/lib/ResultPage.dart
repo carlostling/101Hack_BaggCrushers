@@ -31,12 +31,12 @@ class ResultPage extends StatelessWidget {
             AdviceTitleWidget(),
             Divider(),
             InformationCardWidget(
-              title: "Byt din väg",
-              body: "Genom att byta väg minskar du din risk.",
+              title: "Change your route",
+              body: "Your selected route is considered high risk.",
             ),
             InformationCardWidget(
-              title: "Vänta 10 minuter",
-              body: "Vädret är inte optimalt för din resa.",
+              title: "Wait a moment",
+              body: "The weather is not optimal for driving.",
             ),
           ],
         ),
@@ -85,7 +85,7 @@ class RiskIndicatorWidget extends StatelessWidget {
             ),
             Center(
                 child: Text(
-              "HÖGRE RISK",
+              "HIGH RISK",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
             )),
           ],
@@ -160,7 +160,7 @@ class AdviceTitleWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "MINSKA DIN RISk",
+          "Minimize your risk",
           style: TextStyle(
               fontSize: ScreenUtils.getFontSize(20), color: Colors.grey),
         ),
