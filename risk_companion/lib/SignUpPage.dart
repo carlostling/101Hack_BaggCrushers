@@ -7,17 +7,31 @@ import 'package:location/location.dart' as loc;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
+  String age;
+
+  String carLicense;
+
+  String kmPerYear;
+  SignUpPage({this.age,this.carLicense,this.kmPerYear});
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _age;
+  String age;
 
-  String _carLicense;
+  String carLicense;
 
-  String _kmPerYear;
+  String kmPerYear;
 
+  @override
+  void initState() {
+    age = widget.age;
+    carLicense = widget.carLicense;
+    kmPerYear = widget.kmPerYear;
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -51,6 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
             title: "Age",
             callback: changeAge,
             isNumber: true,
+            initialValue: widget.age,
           ),
           SizedBox(
             height: 10,
@@ -60,6 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
             title: "License Plate",
             callback: changeCarLicense,
             isNumber: false,
+            initialValue: widget.carLicense,
           ),
           SizedBox(
             height: 10,
@@ -69,6 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
             title: "Km per year",
             callback: changeKmPerYear,
             isNumber: true,
+            initialValue: widget.kmPerYear,
           ),
           SizedBox(
             height: 10,
@@ -113,21 +130,21 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void changeAge(String newValue) {
     setState(() {
-       _age = newValue;
+       age = newValue;
     });
    
   }
 
   void changeCarLicense(String newValue) {
     setState(() {
-      _carLicense = newValue;
+      carLicense = newValue;
     });
     
   }
 
   void changeKmPerYear(String newValue) {
     setState(() {
-      _kmPerYear = newValue;
+      kmPerYear = newValue;
     });
     
   }
@@ -135,9 +152,9 @@ class _SignUpPageState extends State<SignUpPage> {
   void _submit(BuildContext context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    sharedPreferences.setString("age", _age);
-    sharedPreferences.setString("carLicense", _carLicense);
-    sharedPreferences.setString("kmPerYear", _kmPerYear);
+    sharedPreferences.setString("age", age);
+    sharedPreferences.setString("carLicense", carLicense);
+    sharedPreferences.setString("kmPerYear", kmPerYear);
     sharedPreferences.setBool("initial", true);
 
     Navigator.pushReplacement(
@@ -157,10 +174,12 @@ class InputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(15)),
-      child: TextField(
+      child: TextFormField(
+        initialValue: initialValue,
         decoration: new InputDecoration(
           labelStyle: TextStyle(color: Colors.grey),
           labelText: title,
+          
           fillColor: Colors.grey,
           border: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(20.0),

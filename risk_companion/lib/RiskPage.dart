@@ -47,7 +47,7 @@ class _RiskPageState extends State<RiskPage> {
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.edit),
-          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage())),
+          onPressed: () => onEdit(),
           ),
         ],
       ),
@@ -130,6 +130,16 @@ class _RiskPageState extends State<RiskPage> {
         ),
       
     );
+  }
+
+  void onEdit() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String age = sharedPreferences.getString("age");
+    String carLicense = sharedPreferences.getString("carLicense");
+    String kmPerYear = sharedPreferences.getString("kmPerYear");
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage(age: age,carLicense: carLicense,kmPerYear: kmPerYear,)));
   }
 
   void changeFocus(String newValue) {
