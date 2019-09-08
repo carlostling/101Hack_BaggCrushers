@@ -277,7 +277,7 @@ class _FocusSliderWidgetState extends State<FocusSliderWidget> {
       child: Slider(
         min: 1.0,
         max: 5.0,
-        divisions: 7,
+        divisions: 4,
         value: _sliderValue.toDouble(),
         label: '${_sliderValue.round()} out of 5',
         onChanged: (double value) {

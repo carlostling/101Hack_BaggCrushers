@@ -140,7 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
     sharedPreferences.setString("kmPerYear", _kmPerYear);
     sharedPreferences.setBool("initial", true);
 
-    Navigator.push(
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => RiskPage()));
   }
 }
