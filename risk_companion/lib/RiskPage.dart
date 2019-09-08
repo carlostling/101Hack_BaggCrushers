@@ -129,42 +129,57 @@ class AutoCompleteWidget extends StatefulWidget {
 }
 
 class _AutoCompleteWidgetState extends State<AutoCompleteWidget> {
-    String selectedLetter;
-    String selectedPerson;
+  String selectedLetter;
+  String selectedPerson;
+  GoogleMapsPlaces _places = GoogleMapsPlaces(
+      apiKey: "AIzaSyACilHiwdEQLGgtahLn578oUXLuQrXgGcg");
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   bool autovalidate = false;
+
   @override
   Widget build(BuildContext context) {
-    return 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(10)),
-              child: SimpleAutocompleteFormField<String>(
-                decoration: new InputDecoration(
-          labelStyle: TextStyle(color: Colors.grey),
-          labelText: "Destination",
-          fillColor: Colors.grey,
-          border: new OutlineInputBorder(
+    return
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(10)),
+        child: SimpleAutocompleteFormField<String>(
+          decoration: new InputDecoration(
+            labelStyle: TextStyle(color: Colors.grey),
+            labelText: "Destination",
+            fillColor: Colors.grey,
+            border: new OutlineInputBorder(
               borderRadius: new BorderRadius.circular(20.0),
               borderSide: new BorderSide(),
+            ),
           ),
-        ),
-                maxSuggestions: 10,
-                
-                itemBuilder: (context, item) => Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(item),
-                    ),
-                onSearch: (String search) async {
-                  //TODO GOOGLE MAPS
-                },
-                itemFromString: (string) => null,
-                onChanged: (value) => setState(() => selectedLetter = value),
-                onSaved: (value) => setState(() => selectedLetter = value),
-                validator: (letter) => letter == null ? 'Invalid letter.' : null,
+          maxSuggestions: 10,
+
+          itemBuilder: (context, item) =>
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(item),
               ),
-            );
+          onSearch: (String search) async {
+            //TODO GOOGLE MAPS
+
+            if(!search.isEmpty){
+
+              PlacesAutocompleteResponse response = await _places.autocomplete(search, language: "sv", components: [Component("country", "SE")]);
+              return response.predictions.map((prediction){
+                return prediction.structuredFormatting.mainText;
+              }).toList();
+            }else {
+              return new List<String>();
+            }
+
+          },
+          itemFromString: (string) => null,
+          onChanged: (value) => setState(() => selectedLetter = value),
+          onSaved: (value) => setState(() => selectedLetter = value),
+          validator: (letter) => letter == null ? 'Invalid letter.' : null,
+        ),
+      );
   }
 }
 
