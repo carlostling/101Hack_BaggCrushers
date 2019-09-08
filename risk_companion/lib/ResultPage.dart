@@ -6,10 +6,12 @@ import 'ScreenUtils.dart';
 
 class ResultPage extends StatelessWidget {
   final RealRisk _realRisk;
-  ResultPage(this._realRisk);
+  double _focus;
+  ResultPage(this._realRisk, this._focus);
   
   @override
   Widget build(BuildContext context) {
+    print(_focus);
     ScreenUtils.init(context);
     return Scaffold(
       appBar: AppBar(
@@ -36,9 +38,13 @@ class ResultPage extends StatelessWidget {
               body: "Your selected route is considered high risk.",
             ),
             InformationCardWidget(
-              title: "Wait a moment",
-              body: "The weather is not optimal for driving.",
+              title: "Age",
+              body: "Young people tend to drive more recklessly. You are not invincible....",
             ),
+            _focus <= 160  ? InformationCardWidget(
+              title: "Focus",
+              body: "Your focus is low, make sure to stop and rest if you feel the need to."
+            ) : Container(width: 0,height: 0)
           ],
         ),
       ),
@@ -119,7 +125,7 @@ class InformationCardWidget extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
-        color: Color.fromRGBO(227, 6, 19, 0.8),
+        color: Color.fromRGBO(227, 6, 19, 0.7),
         elevation: 5,
         child: Padding(
           padding: EdgeInsets.symmetric(

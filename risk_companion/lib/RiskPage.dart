@@ -55,7 +55,7 @@ class _RiskPageState extends State<RiskPage> {
               children: <Widget>[
                 SizedBox(height: ScreenUtils.getHeight(100),),
                 Text(
-                "Utvärdera ditt fokus:",
+                "Evaluate your focus:",
                 style: TextStyle(
                     fontSize: ScreenUtils.getFontSize(20),
                     fontWeight: FontWeight.w500),
@@ -138,7 +138,7 @@ class _RiskPageState extends State<RiskPage> {
         currentLocation.longitude, currentLocation.latitude);
     RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
+        context, MaterialPageRoute(builder: (context) => ResultPage(realRisk, double.parse(_focus))));
   }
 }
 
