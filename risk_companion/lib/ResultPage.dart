@@ -24,7 +24,8 @@ class ResultPage extends StatelessWidget {
               height: 50,
               width: 0,
             ),
-            RiskIndicatorWidget(_realRisk.riskscore),
+            //RiskIndicatorWidget(_realRisk.riskscore),
+            RiskIndicatorWidget(),
             SizedBox(
               height: ScreenUtils.getHeight(20),
               width: 0,
@@ -47,9 +48,9 @@ class ResultPage extends StatelessWidget {
 }
 
 class RiskIndicatorWidget extends StatelessWidget {
-  final double _riskScore;
+  final double _riskScore = 125;
 
-  RiskIndicatorWidget(this._riskScore);
+  //RiskIndicatorWidget(this._riskScore);
   
   @override
   Widget build(BuildContext context) {
@@ -70,29 +71,39 @@ class RiskIndicatorWidget extends StatelessWidget {
                     Color.fromRGBO(0, 90, 160, 1),
                     Color.fromRGBO(0, 90, 160, 1)
                   ],
-                  [Colors.red[800], Color(0x77E57373)],
+                  [Color.fromRGBO(200, 6, 19, 1), Color.fromRGBO(227, 6, 19, 1)],
                   [Colors.orange, Color(0x66FF9800)],
                   [Colors.yellow, Color(0x55FFEB3B)]
                 ],
                 durations: [35000, 19440, 10800, 6000],
-                heightPercentages: [-1.00, 0.23, 0.25, 0.30],
-                blur: MaskFilter.blur(BlurStyle.solid, 50),
+                //heightPercentages: [0, 0.20, 0.25, 0.30],
+                heightPercentages: [0, 1-(_riskScore/250)-0.15, 1-(_riskScore/250)-0.10, 1-(_riskScore/250)-0.05],
+                blur: MaskFilter.blur(BlurStyle.solid, 10),
                 gradientBegin: Alignment.bottomLeft,
                 gradientEnd: Alignment.topRight,
               ),
               waveAmplitude: 0,
-              backgroundColor: Colors.blue,
+              backgroundColor: Color.fromRGBO(0, 90, 160, 1),
               size: Size(double.infinity, double.infinity),
             ),
             Center(
                 child: Text(
-              "HIGH RISK",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+              riskText(),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white70),
             )),
           ],
         ),
       ),
     );
+  }
+  String riskText(){
+    if (_riskScore <= 100)
+      return "Low Risk";
+    else if (_riskScore <=150)
+      return "Medium Risk";
+    else if (_riskScore > 150)
+      return "High Risk";
+    return "";
   }
 }
 
