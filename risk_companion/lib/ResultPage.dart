@@ -33,18 +33,22 @@ class ResultPage extends StatelessWidget {
             ),
             AdviceTitleWidget(),
             Divider(),
+            _focus <= 160  ? InformationCardWidget(
+                title: "Low Focus",
+                body: "Your focus is low, make sure to stop and rest if you feel the need to."
+            ) : Container(width: 0,height: 0),
             InformationCardWidget(
-              title: "Change your route",
-              body: "Your selected route is considered high risk.",
+              title: "Riskful Route",
+              body: "Your selected route is considered high risk. ",
             ),
             InformationCardWidget(
-              title: "Age",
+              title: "Young Age",
               body: "Young people tend to drive more recklessly. You are not invincible....",
             ),
-            _focus <= 160  ? InformationCardWidget(
-              title: "Focus",
-              body: "Your focus is low, make sure to stop and rest if you feel the need to."
-            ) : Container(width: 0,height: 0)
+            InformationCardWidget(
+              title: "Insecure Vehicle",
+              body: "Your vehicle is not considered high-safety. Keep this in mind.",
+            ),
           ],
         ),
       ),
