@@ -20,7 +20,7 @@ class Profile {
   }
 
   set kmPerYear(String kmPerYear) {
-    _kmPerYear = (double.parse(kmPerYear) / 10).toString();
+    _kmPerYear = (double.parse(kmPerYear)).toString();
   }
 
   set destination(String destination) {
@@ -32,7 +32,7 @@ class Profile {
     dataMap.putIfAbsent("age", () => _age);
     dataMap.putIfAbsent("focus", () => _focus);
     dataMap.putIfAbsent("carLicence", () => _carLicense);
-    dataMap.putIfAbsent("distance", () => _kmPerYear);
+    dataMap.putIfAbsent("distance", () => (int.parse(_kmPerYear) / 10).toStringAsFixed(0));
     dataMap.putIfAbsent("destination", () => _destination);
 
     return dataMap;
