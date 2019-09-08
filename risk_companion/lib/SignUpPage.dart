@@ -48,6 +48,7 @@ class SignUpPage extends StatelessWidget {
           InputFieldWidget(
             title: "Age",
             callback: changeAge,
+            isNumber: true,
           ),
           SizedBox(
             height: 10,
@@ -56,6 +57,7 @@ class SignUpPage extends StatelessWidget {
           InputFieldWidget(
             title: "License Plate",
             callback: changeCarLicense,
+            isNumber: false,
           ),
           SizedBox(
             height: 10,
@@ -64,6 +66,7 @@ class SignUpPage extends StatelessWidget {
           InputFieldWidget(
             title: "Km per year",
             callback: changeKmPerYear,
+            isNumber: true,
           ),
           SizedBox(
             height: 10,
@@ -82,6 +85,7 @@ class SignUpPage extends StatelessWidget {
           InputFieldWidget(
             title: "Destination",
             callback: changeDestination,
+            isNumber: false,
           ),
           Expanded(
             child: Container(),
@@ -168,9 +172,11 @@ class SignUpPage extends StatelessWidget {
 class InputFieldWidget extends StatelessWidget {
   final String title;
   final String initialValue;
+  final bool isNumber;
   Function callback;
 
-  InputFieldWidget({@required this.title, this.initialValue, this.callback});
+
+  InputFieldWidget({@required this.title, this.initialValue, this.callback, this.isNumber});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -188,7 +194,7 @@ class InputFieldWidget extends StatelessWidget {
         onChanged: (string) {
           callback(string);
         },
-        keyboardType: TextInputType.text,
+        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
         style: new TextStyle(
           color: Colors.black,
           fontFamily: "Poppins",
