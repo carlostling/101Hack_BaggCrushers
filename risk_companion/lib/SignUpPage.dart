@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:risk_companion/ResultPage.dart';
-import 'package:risk_companion/models/LFRisk.dart';
-import 'package:risk_companion/models/Profile.dart';
-import 'package:risk_companion/models/RealRisk.dart';
-import 'package:risk_companion/models/WeatherForecast.dart';
-import 'package:risk_companion/services/SmhiApiService.dart';
-import 'package:risk_companion/services/apiService.dart';
+import 'package:risk_companion/RiskPage.dart';
 import 'ScreenUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:location/location.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:location/location.dart' as loc;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatelessWidget {
   String _age;
-  String _focus;
   String _carLicense;
   String _kmPerYear;
-  String _destination;
 
   @override
   Widget build(BuildContext context) {
+    
     ScreenUtils.init(context);
     return Scaffold(
+      key: key,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 90, 160, 1),
@@ -72,21 +68,6 @@ class SignUpPage extends StatelessWidget {
             height: 10,
             width: 0,
           ),
-          Text(
-            "Current focus:",
-            style: TextStyle(
-                fontSize: ScreenUtils.getFontSize(20),
-                fontWeight: FontWeight.w500),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
-            child: FocusSliderWidget(changeFocus),
-          ),
-          InputFieldWidget(
-            title: "Destination",
-            callback: changeDestination,
-            isNumber: false,
-          ),
           Expanded(
             child: Container(),
           ),
@@ -128,9 +109,6 @@ class SignUpPage extends StatelessWidget {
     _age = newValue;
   }
 
-  void changeFocus(String newValue) {
-    _focus = newValue;
-  }
 
   void changeCarLicense(String newValue) {
     _carLicense = newValue;
@@ -140,32 +118,16 @@ class SignUpPage extends StatelessWidget {
     _kmPerYear = newValue;
   }
 
-  void changeDestination(String newValue) {
-    _destination = newValue;
-  }
-
   void _submit(BuildContext context) async {
-    LocationData currentLocation;
-    var location = new Location();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-// Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      currentLocation = await location.getLocation();
-    } catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {}
-      currentLocation = null;
-      return;
-    }
-    
-    Profile profile = new Profile(
-        _age, _carLicense, _destination, _focus, _kmPerYear, currentLocation);
-    ApiService lfApiService = ApiService.instance;
-    SmhiApiService smhiApiService = SmhiApiService.instance;
-    LFRisk lfRisk = await lfApiService.getAccidentRisk(profile.getDataMap());
-    WeatherForecast weatherForecast = await smhiApiService.getForecast(
-        num.parse(currentLocation.longitude.toStringAsFixed(6)), num.parse(currentLocation.latitude.toStringAsFixed(6)));
-    RealRisk realRisk = new RealRisk(lfRisk, weatherForecast);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage(realRisk)));
+    sharedPreferences.setString("age", _age);
+    sharedPreferences.setString("carLicense", _carLicense);
+    sharedPreferences.setString("kmPerYear", _kmPerYear);
+    sharedPreferences.setBool("initial", true);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RiskPage()));
   }
 }
 
@@ -199,47 +161,6 @@ class InputFieldWidget extends StatelessWidget {
           color: Colors.black,
           fontFamily: "Poppins",
         ),
-      ),
-    );
-  }
-}
-
-class FocusSliderWidget extends StatefulWidget {
-  Function callback;
-
-  FocusSliderWidget(this.callback);
-
-  @override
-  _FocusSliderWidgetState createState() => _FocusSliderWidgetState();
-}
-
-class _FocusSliderWidgetState extends State<FocusSliderWidget> {
-  int _sliderValue = 3;
-  @override
-  Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        activeTrackColor: Colors.lightBlue[200],
-        inactiveTrackColor: Colors.grey[200],
-        trackHeight: 7.0,
-        thumbColor: Colors.grey[400],
-        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
-        tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 0),
-        overlayColor: Colors.lightBlue[200].withAlpha(10),
-        overlayShape: RoundSliderOverlayShape(overlayRadius: 14.0),
-      ),
-      child: Slider(
-        min: 1.0,
-        max: 5.0,
-        divisions: 7,
-        value: _sliderValue.toDouble(),
-        label: '${_sliderValue.round()} out of 5',
-        onChanged: (double currentSizeOfQuiz) {
-          widget.callback(currentSizeOfQuiz);
-          setState(() {
-            _sliderValue = currentSizeOfQuiz.toInt();
-          });
-        },
       ),
     );
   }
