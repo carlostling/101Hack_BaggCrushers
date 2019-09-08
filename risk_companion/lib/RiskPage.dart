@@ -66,7 +66,7 @@ class _RiskPageState extends State<RiskPage> {
                 child: FocusSliderWidget(changeFocus),
               ),
               SizedBox(height: ScreenUtils.getHeight(20),),
-              AutoCompleteWidget(),
+              AutoCompleteWidget(changeDestination),
                
               ],
             ),
@@ -104,6 +104,12 @@ class _RiskPageState extends State<RiskPage> {
     });
   }
 
+  void changeDestination(String newValue) {
+    setState(() {
+    _destination = newValue;
+    });
+  }
+
   void _submit(BuildContext context) async {
     loc.LocationData currentLocation;
     var location = new loc.Location();
@@ -138,6 +144,9 @@ class _RiskPageState extends State<RiskPage> {
 
 
 class AutoCompleteWidget extends StatefulWidget {
+  final Function _callback;
+
+  AutoCompleteWidget(this._callback);
 
   @override
   _AutoCompleteWidgetState createState() => _AutoCompleteWidgetState();
@@ -190,9 +199,10 @@ class _AutoCompleteWidgetState extends State<AutoCompleteWidget> {
 
           },
           itemFromString: (string) => null,
-          onChanged: (value) => setState(() => selectedLetter = value),
-          onSaved: (value) => setState(() => selectedLetter = value),
-          validator: (letter) => letter == null ? 'Invalid letter.' : null,
+          onChanged: (value) {
+            setState(() => selectedLetter = value);
+            widget._callback(value);},
+          validator: (letter) => letter == null ? 'Invalid.' : null,
         ),
       );
   }
