@@ -34,7 +34,7 @@ class SignUpPage extends StatelessWidget {
           ),
           Center(
               child: Text(
-            "BERÄKNA RISK",
+            "Calculate Risk",
             style: TextStyle(
               fontSize: ScreenUtils.getFontSize(40),
               color: Color.fromRGBO(0, 90, 160, 1),
@@ -46,7 +46,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Ålder",
+            title: "Age",
             callback: changeAge,
           ),
           SizedBox(
@@ -54,7 +54,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Nummerplåt",
+            title: "License Plate",
             callback: changeCarLicense,
           ),
           SizedBox(
@@ -62,7 +62,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           InputFieldWidget(
-            title: "Km per år",
+            title: "Km per year",
             callback: changeKmPerYear,
           ),
           SizedBox(
@@ -70,7 +70,7 @@ class SignUpPage extends StatelessWidget {
             width: 0,
           ),
           Text(
-            "Nuvarande fokus:",
+            "Current focus:",
             style: TextStyle(
                 fontSize: ScreenUtils.getFontSize(20),
                 fontWeight: FontWeight.w500),
