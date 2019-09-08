@@ -11,6 +11,8 @@ class Profile {
   get locationData => _locationData;
 
 
+  String get destination => _destination;
+
   set focus(String focus) {
     _focus = focus;
   }
