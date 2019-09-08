@@ -27,23 +27,61 @@ class RiskPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(0, 90, 160, 1),
+        actions: <Widget>[
+          Icon(Icons.edit),
+        ],
+      ),
+      
+      body: Stack(
           children: <Widget>[
-            Text(
-            "Utvärdera ditt fokus:",
-            style: TextStyle(
-                fontSize: ScreenUtils.getFontSize(20),
-                fontWeight: FontWeight.w500),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
-            child: FocusSliderWidget(changeFocus),
-          ),
-          AutoCompleteWidget(),
+            
+            Column(
+              children: <Widget>[
+                SizedBox(height: ScreenUtils.getHeight(100),),
+                Text(
+                "Utvärdera ditt fokus:",
+                style: TextStyle(
+                    fontSize: ScreenUtils.getFontSize(20),
+                    fontWeight: FontWeight.w500),
+              ),
+              
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(50)),
+                child: FocusSliderWidget(changeFocus),
+              ),
+              SizedBox(height: ScreenUtils.getHeight(20),),
+              AutoCompleteWidget(),
+               
+              ],
+            ),
+           Align(
+              alignment: Alignment.bottomCenter,
+              
+              child: 
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: RaisedButton(
+                  onPressed: () => _submit(context),
+                  color: Color.fromRGBO(227, 6, 19, 0.8),
+                  shape: StadiumBorder(),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      "Calculate risk",
+                      style: TextStyle(
+                          color: Colors.white, fontSize: ScreenUtils.getFontSize(25)),
+                    ),
+                  ),
+              ),
+               ),
+            )
           ],
         ),
-      ),
+      
     );
   }
 
@@ -86,8 +124,6 @@ class RiskPage extends StatelessWidget {
 
 class AutoCompleteWidget extends StatefulWidget {
 
-  final people = <String>["Apelsin", "Henrik"];
-  final letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
   @override
   _AutoCompleteWidgetState createState() => _AutoCompleteWidgetState();
 }
@@ -102,26 +138,32 @@ class _AutoCompleteWidgetState extends State<AutoCompleteWidget> {
   @override
   Widget build(BuildContext context) {
     return 
-            SimpleAutocompleteFormField<String>(
-              decoration: InputDecoration(
-                  labelText: 'Letter', border: OutlineInputBorder()),
-              // suggestionsHeight: 200.0,
-              maxSuggestions: 10,
-              itemBuilder: (context, item) => Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(item),
-                  ),
-              onSearch: (String search) async => search.isEmpty
-                  ? widget.letters
-                  : widget.letters
-                      .where((letter) => search.toLowerCase().contains(letter))
-                      .toList(),
-              itemFromString: (string) => widget.letters.singleWhere(
-                  (letter) => letter == string.toLowerCase(),
-                  orElse: () => null),
-              onChanged: (value) => setState(() => selectedLetter = value),
-              onSaved: (value) => setState(() => selectedLetter = value),
-              validator: (letter) => letter == null ? 'Invalid letter.' : null,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getWidth(10)),
+              child: SimpleAutocompleteFormField<String>(
+                decoration: new InputDecoration(
+          labelStyle: TextStyle(color: Colors.grey),
+          labelText: "Destination",
+          fillColor: Colors.grey,
+          border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(20.0),
+              borderSide: new BorderSide(),
+          ),
+        ),
+                maxSuggestions: 10,
+                
+                itemBuilder: (context, item) => Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(item),
+                    ),
+                onSearch: (String search) async {
+                  //TODO GOOGLE MAPS
+                },
+                itemFromString: (string) => null,
+                onChanged: (value) => setState(() => selectedLetter = value),
+                onSaved: (value) => setState(() => selectedLetter = value),
+                validator: (letter) => letter == null ? 'Invalid letter.' : null,
+              ),
             );
   }
 }
