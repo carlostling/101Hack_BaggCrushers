@@ -7,6 +7,7 @@ import 'ScreenUtils.dart';
 class ResultPage extends StatelessWidget {
   final RealRisk _realRisk;
   ResultPage(this._realRisk);
+  
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
