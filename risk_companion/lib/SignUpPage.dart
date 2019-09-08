@@ -80,7 +80,7 @@ class SignUpPage extends StatelessWidget {
             child: FocusSliderWidget(),
           ),
           InputFieldWidget(
-            title: "Slutdestination",
+            title: "Destination",
             callback: changeDestination,
           ),
           Expanded(
@@ -93,7 +93,7 @@ class SignUpPage extends StatelessWidget {
                 value: true,
               ),
               Text(
-                "Spara min data till nästa riskanalys",
+                "Save my data for next calculation",
                 style: TextStyle(fontWeight: FontWeight.w400),
               )
             ],
@@ -106,7 +106,7 @@ class SignUpPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Gå vidare",
+                "Next",
                 style: TextStyle(
                     color: Colors.white, fontSize: ScreenUtils.getFontSize(20)),
               ),
@@ -222,7 +222,7 @@ class _FocusSliderWidgetState extends State<FocusSliderWidget> {
         max: 5.0,
         divisions: 7,
         value: _sliderValue.toDouble(),
-        label: '${_sliderValue.round()} av 5',
+        label: '${_sliderValue.round()} out of 5',
         onChanged: (double currentSizeOfQuiz) {
           setState(() {
             _sliderValue = currentSizeOfQuiz.toInt();
